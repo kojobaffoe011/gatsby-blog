@@ -1,11 +1,22 @@
 import React from "react"
-import {Link} from "gatsby"
+import {Link,graphql,useStaticQuery} from "gatsby"
+import Img from 'gatsby-image'
 import Layout from "../components/layout"
 import Head from '../components/head'
 import indexStyles from './index.module.scss'
 
-
 const IndexPage = () => {
+   const data = useStaticQuery( graphql`
+  query {
+    file(relativePath: { eq: "homeImg.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`)
   return (
     
     <Layout>
@@ -19,6 +30,9 @@ const IndexPage = () => {
 
 
       </p>
+
+<p><Img fluid = {data.file.childImageSharp.fluid} /></p>
+
       <p>
       Why do we use it?
       It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
